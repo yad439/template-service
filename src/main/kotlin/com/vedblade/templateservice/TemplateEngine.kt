@@ -32,5 +32,23 @@ class TemplateEngine {
 		return resultBuilder.toString()
 	}
 
+	fun validate(template: String): ValidationResult {
+		return if (template.count { it == INTERPOLATION_CHARACTER } % 2 == 0) ValidationResult.VALID
+		else ValidationResult.UNPAIRED_INTERPOLATION_CHARACTER
+	}
+
+	enum class ValidationResult {
+		VALID {
+			override val message: String
+				get() = "Valid"
+		},
+		UNPAIRED_INTERPOLATION_CHARACTER {
+			override val message: String
+				get() = "Unpaired interpolation character"
+		};
+
+		abstract val message: String
+	}
+
 	private enum class State { TEXT, VARIABLE }
 }

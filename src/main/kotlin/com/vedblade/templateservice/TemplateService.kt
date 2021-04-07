@@ -10,6 +10,8 @@ class TemplateService(
 	private val mapper: TemplateMapper
 ) {
 	fun save(templateDto: TemplateDto) {
+		val validationResult = engine.validate(templateDto.template)
+		if (validationResult != TemplateEngine.ValidationResult.VALID) throw TemplateException(validationResult.message)
 		val entity = mapper.dtoToEntity(templateDto)
 		repository.save(entity)
 	}
