@@ -8,9 +8,9 @@ import javax.persistence.Lob
 @Entity
 open class TemplateEntity(
 	@Id
-	var id: String,
+	open var id: String?,
 	@Lob
-	var template: String,
+	open var template: String?,
 	@ElementCollection
-	var recipients: Collection<String>
+	open var recipients: Collection<String>?
 )
