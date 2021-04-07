@@ -1,7 +1,12 @@
 package com.vedblade.templateservice
 
+import javax.validation.constraints.NotNull
+
 class TemplateDto(
-	var templateId: String?,
-	var template: String?,
-	var recipients: Collection<String>?
+	@field:NotNull
+	val templateId: String,
+	@field:NotNull
+	val template: String,
+	@field:NotNull
+	val recipients: Collection<String>
 )

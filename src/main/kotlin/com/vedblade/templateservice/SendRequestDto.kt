@@ -1,3 +1,5 @@
 package com.vedblade.templateservice
 
-class SendRequestDto(val templateId: String, val variables: Map<String, String>)
+import javax.validation.constraints.NotNull
+
+class SendRequestDto(@field:NotNull val templateId: String, @field:NotNull val variables: Map<String, String>)
