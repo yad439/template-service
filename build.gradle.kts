@@ -29,6 +29,12 @@ dependencies {
 	kapt("org.mapstruct:mapstruct-processor:1.4.2.Final")
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.mockk:mockk:1.11.0")
+	testImplementation("com.squareup.okhttp3:okhttp:4.9.1")
+	testImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
+	testImplementation("io.kotest:kotest-runner-junit5:4.4.3")
+	testImplementation("io.kotest:kotest-extensions-spring:4.4.3")
+	testImplementation("io.kotest:kotest-assertions-core:4.4.3")
 }
 
 tasks.withType<KotlinCompile> {
@@ -38,6 +44,23 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+tasks.test {
+	useJUnitPlatform() {
+		excludeTags("integration")
+		val props = System.getProperties().map { it.key.toString() to it.value }.toMutableList()
+		props += "kotest.tags" to "!integration"
+		systemProperties = props.toMap()
+	}
 }
+
+val integrationTest: Task = task<Test>("integrationTest") {
+	useJUnitPlatform() {
+		includeTags("integration")
+		val props = System.getProperties().map { it.key.toString() to it.value }.toMutableList()
+		props += "kotest.tags" to "integration"
+		systemProperties = props.toMap()
+	}
+	shouldRunAfter("test")
+}
+
+tasks.check { dependsOn(integrationTest) }
