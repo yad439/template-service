@@ -23,6 +23,7 @@ class TemplateEngine {
 						val value = data[variable]
 							?: throw TemplateException("Could not get value for variable \"${variable}\"")
 						resultBuilder.append(value)
+						variableBuilder.clear()
 						state = State.TEXT
 					} else variableBuilder.append(character)
 				}
