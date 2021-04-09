@@ -45,8 +45,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.test {
-	useJUnitPlatform() {
-		excludeTags("integration")
+	useJUnitPlatform {
 		val props = System.getProperties().map { it.key.toString() to it.value }.toMutableList()
 		props += "kotest.tags" to "!integration"
 		systemProperties = props.toMap()
@@ -54,8 +53,7 @@ tasks.test {
 }
 
 val integrationTest: Task = task<Test>("integrationTest") {
-	useJUnitPlatform() {
-		includeTags("integration")
+	useJUnitPlatform {
 		val props = System.getProperties().map { it.key.toString() to it.value }.toMutableList()
 		props += "kotest.tags" to "integration"
 		systemProperties = props.toMap()
