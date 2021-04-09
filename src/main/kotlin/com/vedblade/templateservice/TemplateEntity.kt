@@ -2,6 +2,7 @@ package com.vedblade.templateservice
 
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.Id
 import javax.persistence.Lob
 
@@ -11,6 +12,6 @@ open class TemplateEntity(
 	open var id: String?,
 	@Lob
 	open var template: String?,
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	open var recipients: Collection<String>?
 )
