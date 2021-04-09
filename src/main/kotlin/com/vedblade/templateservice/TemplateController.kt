@@ -25,6 +25,8 @@ class TemplateController(private val templateService: TemplateService) {
 			templateService.send(data.templateId, data.variables)
 		} catch (e: TemplateException) {
 			throw ResponseStatusException(HttpStatus.BAD_REQUEST, e.message)
+		} catch (e: NoSuchElementException) {
+			throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Template not found")
 		}
 	}
 }
